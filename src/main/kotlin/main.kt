@@ -21,6 +21,11 @@ fun main() {
     println("print prime number")
     println("prime(10) = ${primeNumber(10)}")
     println("prime(100) = ${primeNumber(100)}")
+
+    println()
+    println("print oddCount")
+    println("oddCount(7) = ${oddCount(7)}")
+    println("oddCount(15) = ${oddCount(15)}")
 }
 
 fun isPalindrom(input: String): Boolean {
@@ -41,9 +46,9 @@ fun primeNumber(n: Long): List<Long> {
 
     var index = 2L
     while (true) {
-        if(primeList.size.toLong() == n) break
+        if (primeList.size.toLong() == n) break
 
-        if(isPrime(index)){
+        if (isPrime(index)) {
             primeList.add(index)
         }
         index++
@@ -59,4 +64,17 @@ fun isPrime(n: Long): Boolean {
         }
     }
     return isPrime
+}
+
+/*
+Given a number n, return the number of positive odd numbers below n
+oddCount(7) //=> 3, i.e [1, 3, 5]
+oddCount(15) //=> 7, i.e [1, 3, 5, 7, 9, 11, 13]
+ */
+fun oddCount(n: Long): Long {
+    return if((n-1) % 2 == 0L){
+        (n-1) / 2
+    }else{
+        ((n-1) / 2) + 1
+    }
 }
