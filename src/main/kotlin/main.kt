@@ -1,4 +1,5 @@
 import java.util.*
+import kotlin.collections.ArrayList
 
 fun main() {
 
@@ -38,6 +39,10 @@ fun main() {
     println("print numberToRoman")
     println("numberToRoman(21) = ${numberToRoman(21)}")
     println("numberToRoman(9) = ${numberToRoman(9)}")
+
+    println()
+    println("print insertionSort")
+    println("insertionSort(4,3,2,10,12,1,5,6) = ${insertionSort(arrayListOf(4, 3, 2, 10, 12, 1, 5, 6))}")
 }
 
 fun isPalindrom(input: String): Boolean {
@@ -125,7 +130,7 @@ fun romanToNumber(roman: String): Int {
     return result
 }
 
-val romanMaps = TreeMap<Int,String>().apply {
+val romanMaps = TreeMap<Int, String>().apply {
     put(1000, "M")
     put(900, "CM")
     put(500, "D")
@@ -143,6 +148,22 @@ val romanMaps = TreeMap<Int,String>().apply {
 
 fun numberToRoman(number: Int): String {
     val l = romanMaps.floorKey(number)
-    if(l == number) return romanMaps[l] ?: error("input not valid")
-    return "${romanMaps[l]}${numberToRoman(number-l)}"
+    if (l == number) return romanMaps[l] ?: error("input not valid")
+    return "${romanMaps[l]}${numberToRoman(number - l)}"
+}
+
+fun <T> insertionSort(arr: ArrayList<T>): ArrayList<T> where T : Number {
+    val result = arr.clone() as ArrayList<T>
+    for (i in 1 until result.size) {
+        val key = result[i]
+
+        var j = i - 1
+
+        while (j >= 0 && result[j].toDouble() > key.toDouble()) {
+            result[j + 1] = result[j]
+            j--
+        }
+        result[j + 1] = key
+    }
+    return result
 }
