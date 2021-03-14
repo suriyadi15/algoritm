@@ -1,3 +1,5 @@
+import java.util.*
+
 fun main() {
 
     //check is palindrom
@@ -26,6 +28,16 @@ fun main() {
     println("print oddCount")
     println("oddCount(7) = ${oddCount(7)}")
     println("oddCount(15) = ${oddCount(15)}")
+
+    println()
+    println("print romanToNumber")
+    println("romanToNumber(XXI) = ${romanToNumber("XXI")}")
+    println("romanToNumber(IX) = ${romanToNumber("IX")}")
+
+    println()
+    println("print numberToRoman")
+    println("numberToRoman(21) = ${numberToRoman(21)}")
+    println("numberToRoman(9) = ${numberToRoman(9)}")
 }
 
 fun isPalindrom(input: String): Boolean {
@@ -72,9 +84,65 @@ oddCount(7) //=> 3, i.e [1, 3, 5]
 oddCount(15) //=> 7, i.e [1, 3, 5, 7, 9, 11, 13]
  */
 fun oddCount(n: Long): Long {
-    return if((n-1) % 2 == 0L){
-        (n-1) / 2
-    }else{
-        ((n-1) / 2) + 1
+    return if ((n - 1) % 2 == 0L) {
+        (n - 1) / 2
+    } else {
+        ((n - 1) / 2) + 1
     }
+}
+
+fun romanToNumber(roman: String): Int {
+    val maps = mapOf(
+        'I' to 1,
+        'V' to 5,
+        'X' to 10,
+        'L' to 50,
+        'C' to 100,
+        'D' to 500,
+        'M' to 1000
+    )
+
+    var result = 0
+    var i = 0
+    while (i < roman.length) {
+        val s1 = maps[roman[i]] ?: error("input not valid")
+
+        if (i + 1 < roman.length) {
+            val s2 = maps[roman[i + 1]] ?: error("input not valid")
+
+            if (s1 >= s2) {
+                result += s1
+            } else {
+                result += s2 - s1
+                i++
+            }
+        } else {
+            result += s1
+        }
+        i++
+    }
+
+    return result
+}
+
+val romanMaps = TreeMap<Int,String>().apply {
+    put(1000, "M")
+    put(900, "CM")
+    put(500, "D")
+    put(400, "CD")
+    put(100, "C")
+    put(90, "XC")
+    put(50, "L")
+    put(40, "XL")
+    put(10, "X")
+    put(9, "IX")
+    put(5, "V")
+    put(4, "IV")
+    put(1, "I")
+}
+
+fun numberToRoman(number: Int): String {
+    val l = romanMaps.floorKey(number)
+    if(l == number) return romanMaps[l] ?: error("input not valid")
+    return "${romanMaps[l]}${numberToRoman(number-l)}"
 }
