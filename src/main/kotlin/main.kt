@@ -43,6 +43,10 @@ fun main() {
     println()
     println("print insertionSort")
     println("insertionSort(4,3,2,10,12,1,5,6) = ${insertionSort(arrayListOf(4, 3, 2, 10, 12, 1, 5, 6))}")
+
+    println()
+    println("print bubbleSort")
+    println("bubbleSort(4,3,2,10,12,1,5,6) = ${bubbleSort(4, 3, 2, 10, 12, 1, 5, 6)}")
 }
 
 fun isPalindrom(input: String): Boolean {
@@ -164,6 +168,21 @@ fun <T> insertionSort(arr: ArrayList<T>): ArrayList<T> where T : Number {
             j--
         }
         result[j + 1] = key
+    }
+    return result
+}
+
+fun <T> bubbleSort(vararg numbers: T): List<T> where T : Number {
+    val result = numbers.asList().toMutableList()
+
+    for (i in result.indices) {
+        for (j in 0 until result.size - i - 1) {
+            if (result[j].toDouble() > result[j + 1].toDouble()) {
+                val temp = result[j]
+                result[j] = result[j + 1]
+                result[j + 1] = temp
+            }
+        }
     }
     return result
 }
